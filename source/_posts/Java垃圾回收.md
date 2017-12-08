@@ -3,7 +3,6 @@ author: ccbu
 tags: []
 categories:
   - android
-  - ''
 date: 2017-12-06 22:01:00
 ---
 ### 垃圾收集算法
