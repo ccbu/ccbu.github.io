@@ -24,10 +24,10 @@
     <!--Title-->
 
 
-<title>Android Drawable介绍 | ccbu&#39;s blog</title>
+<title>Android Drawable介绍 | Hexo</title>
 
 
-    <link rel="alternate" href="/atom.xml" title="ccbu&#39;s blog" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
 
 
     <link rel="icon" href="/favicon.ico">
@@ -37,7 +37,7 @@
 
 
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css?rev=9.12.0">
 
 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
@@ -220,10 +220,146 @@
 </tr>
 </tbody>
 </table>
-<p>下面我们通过Framework的源代码来探索一下Drawable的加载过程，一般情况下，我们通过getResources().getDrawable(int id);的方式去加载。顺着这条线往下看，getDrawable-&gt;loadDrawable-&gt;loadDrawableForCookie-&gt;Drawable.createFromXml-&gt;createFromXmlInner,来看android\graphics\drawable\Drawable.java的createFromXmlInner函数的实现代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public static Drawable createFromXmlInner(Resources r, XmlPullParser parser, AttributeSet attrs,</span><br><span class="line">            Theme theme) throws XmlPullParserException, IOException &#123;</span><br><span class="line">        final Drawable drawable;</span><br><span class="line"></span><br><span class="line">        final String name = parser.getName();</span><br><span class="line">        if (name.equals(&quot;selector&quot;)) &#123;</span><br><span class="line">            drawable = new StateListDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;animated-selector&quot;)) &#123;</span><br><span class="line">            drawable = new AnimatedStateListDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;level-list&quot;)) &#123;</span><br><span class="line">            drawable = new LevelListDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;layer-list&quot;)) &#123;</span><br><span class="line">            drawable = new LayerDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;transition&quot;)) &#123;</span><br><span class="line">            drawable = new TransitionDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;ripple&quot;)) &#123;</span><br><span class="line">            drawable = new RippleDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;color&quot;)) &#123;</span><br><span class="line">            drawable = new ColorDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;shape&quot;)) &#123;</span><br><span class="line">            drawable = new GradientDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;vector&quot;)) &#123;</span><br><span class="line">            drawable = new VectorDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;animated-vector&quot;)) &#123;</span><br><span class="line">            drawable = new AnimatedVectorDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;scale&quot;)) &#123;</span><br><span class="line">            drawable = new ScaleDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;clip&quot;)) &#123;</span><br><span class="line">            drawable = new ClipDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;rotate&quot;)) &#123;</span><br><span class="line">            drawable = new RotateDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;animated-rotate&quot;)) &#123;</span><br><span class="line">            drawable = new AnimatedRotateDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;animation-list&quot;)) &#123;</span><br><span class="line">            drawable = new AnimationDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;inset&quot;)) &#123;</span><br><span class="line">            drawable = new InsetDrawable();</span><br><span class="line">        &#125; else if (name.equals(&quot;bitmap&quot;)) &#123;</span><br><span class="line">            //noinspection deprecation</span><br><span class="line">            drawable = new BitmapDrawable(r);</span><br><span class="line">            if (r != null) &#123;</span><br><span class="line">               ((BitmapDrawable) drawable).setTargetDensity(r.getDisplayMetrics());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else if (name.equals(&quot;nine-patch&quot;)) &#123;</span><br><span class="line">            drawable = new NinePatchDrawable();</span><br><span class="line">            if (r != null) &#123;</span><br><span class="line">                ((NinePatchDrawable) drawable).setTargetDensity(r.getDisplayMetrics());</span><br><span class="line">             &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            throw new XmlPullParserException(parser.getPositionDescription() +</span><br><span class="line">                    &quot;: invalid drawable tag &quot; + name);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        drawable.inflate(r, parser, attrs, theme);</span><br><span class="line">        return drawable;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>上面的对应关系就从这里来的，现在是不是一下子明朗了呢。在函数结尾，Drawable通过条用inflate函数解析AttributeSet中的属性信息，并设置Drawable相应的属性。看一下BitmapDrawable吧，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void inflate(Resources r, XmlPullParser parser, AttributeSet attrs, Theme theme)</span><br><span class="line">            throws XmlPullParserException, IOException &#123;</span><br><span class="line">        super.inflate(r, parser, attrs, theme);</span><br><span class="line"></span><br><span class="line">        final TypedArray a = obtainAttributes(r, theme, attrs, R.styleable.BitmapDrawable);</span><br><span class="line">        updateStateFromTypedArray(a);</span><br><span class="line">        verifyState(a);</span><br><span class="line">        a.recycle();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>继续看updateStateFromTypedArray<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">private void updateStateFromTypedArray(TypedArray a) throws XmlPullParserException &#123;</span><br><span class="line">        final Resources r = a.getResources();</span><br><span class="line">        final BitmapState state = mBitmapState;</span><br><span class="line"></span><br><span class="line">        // Account for any configuration changes.</span><br><span class="line">        state.mChangingConfigurations |= a.getChangingConfigurations();</span><br><span class="line"></span><br><span class="line">        // Extract the theme attributes, if any.</span><br><span class="line">        state.mThemeAttrs = a.extractThemeAttrs();</span><br><span class="line"></span><br><span class="line">        final int srcResId = a.getResourceId(R.styleable.BitmapDrawable_src, 0);</span><br><span class="line">        if (srcResId != 0) &#123;</span><br><span class="line">            final Bitmap bitmap = BitmapFactory.decodeResource(r, srcResId);</span><br><span class="line">            if (bitmap == null) &#123;</span><br><span class="line">                throw new XmlPullParserException(a.getPositionDescription() +</span><br><span class="line">                        &quot;: &lt;bitmap&gt; requires a valid src attribute&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            state.mBitmap = bitmap;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        state.mTargetDensity = r.getDisplayMetrics().densityDpi;</span><br><span class="line"></span><br><span class="line">        final boolean defMipMap = state.mBitmap != null ? state.mBitmap.hasMipMap() : false;</span><br><span class="line">        setMipMap(a.getBoolean(R.styleable.BitmapDrawable_mipMap, defMipMap));</span><br><span class="line"></span><br><span class="line">        state.mAutoMirrored = a.getBoolean(</span><br><span class="line">                R.styleable.BitmapDrawable_autoMirrored, state.mAutoMirrored);</span><br><span class="line">        state.mBaseAlpha = a.getFloat(R.styleable.BitmapDrawable_alpha, state.mBaseAlpha);</span><br><span class="line"></span><br><span class="line">        final int tintMode = a.getInt(R.styleable.BitmapDrawable_tintMode, -1);</span><br><span class="line">        if (tintMode != -1) &#123;</span><br><span class="line">            state.mTintMode = Drawable.parseTintMode(tintMode, Mode.SRC_IN);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final ColorStateList tint = a.getColorStateList(R.styleable.BitmapDrawable_tint);</span><br><span class="line">        if (tint != null) &#123;</span><br><span class="line">            state.mTint = tint;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final Paint paint = mBitmapState.mPaint;</span><br><span class="line">        paint.setAntiAlias(a.getBoolean(</span><br><span class="line">                R.styleable.BitmapDrawable_antialias, paint.isAntiAlias()));</span><br><span class="line">        paint.setFilterBitmap(a.getBoolean(</span><br><span class="line">                R.styleable.BitmapDrawable_filter, paint.isFilterBitmap()));</span><br><span class="line">        paint.setDither(a.getBoolean(R.styleable.BitmapDrawable_dither, paint.isDither()));</span><br><span class="line"></span><br><span class="line">        setGravity(a.getInt(R.styleable.BitmapDrawable_gravity, state.mGravity));</span><br><span class="line"></span><br><span class="line">        final int tileMode = a.getInt(R.styleable.BitmapDrawable_tileMode, TILE_MODE_UNDEFINED);</span><br><span class="line">        if (tileMode != TILE_MODE_UNDEFINED) &#123;</span><br><span class="line">            final Shader.TileMode mode = parseTileMode(tileMode);</span><br><span class="line">            setTileModeXY(mode, mode);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final int tileModeX = a.getInt(R.styleable.BitmapDrawable_tileModeX, TILE_MODE_UNDEFINED);</span><br><span class="line">        if (tileModeX != TILE_MODE_UNDEFINED) &#123;</span><br><span class="line">            setTileModeX(parseTileMode(tileModeX));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final int tileModeY = a.getInt(R.styleable.BitmapDrawable_tileModeY, TILE_MODE_UNDEFINED);</span><br><span class="line">        if (tileModeY != TILE_MODE_UNDEFINED) &#123;</span><br><span class="line">            setTileModeY(parseTileMode(tileModeY));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Update local properties.</span><br><span class="line">        initializeWithState(state, r);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>updateStateFromTypedArray函数中，BitmapDrawable获取到src属性后，通过BitmapFactory加载图像文件，并读取用户配置的属性，设置BitmapDrawable的其他属性。其他的Drawable的实现方式类似。</p>
+<p>下面我们通过Framework的源代码来探索一下Drawable的加载过程，一般情况下，我们通过getResources().getDrawable(int id);的方式去加载。顺着这条线往下看，getDrawable-&gt;loadDrawable-&gt;loadDrawableForCookie-&gt;Drawable.createFromXml-&gt;createFromXmlInner,来看android\graphics\drawable\Drawable.java的createFromXmlInner函数的实现代码。</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<pre><code>public static Drawable createFromXmlInner(Resources r, XmlPullParser parser, AttributeSet attrs,
+            Theme theme) throws XmlPullParserException, IOException {
+        final Drawable drawable;
+
+        final String name = parser.getName();
+        if (name.equals(&quot;selector&quot;)) {
+            drawable = new StateListDrawable();
+        } else if (name.equals(&quot;animated-selector&quot;)) {
+            drawable = new AnimatedStateListDrawable();
+        } else if (name.equals(&quot;level-list&quot;)) {
+            drawable = new LevelListDrawable();
+        } else if (name.equals(&quot;layer-list&quot;)) {
+            drawable = new LayerDrawable();
+        } else if (name.equals(&quot;transition&quot;)) {
+            drawable = new TransitionDrawable();
+        } else if (name.equals(&quot;ripple&quot;)) {
+            drawable = new RippleDrawable();
+        } else if (name.equals(&quot;color&quot;)) {
+            drawable = new ColorDrawable();
+        } else if (name.equals(&quot;shape&quot;)) {
+            drawable = new GradientDrawable();
+        } else if (name.equals(&quot;vector&quot;)) {
+            drawable = new VectorDrawable();
+        } else if (name.equals(&quot;animated-vector&quot;)) {
+            drawable = new AnimatedVectorDrawable();
+        } else if (name.equals(&quot;scale&quot;)) {
+            drawable = new ScaleDrawable();
+        } else if (name.equals(&quot;clip&quot;)) {
+            drawable = new ClipDrawable();
+        } else if (name.equals(&quot;rotate&quot;)) {
+            drawable = new RotateDrawable();
+        } else if (name.equals(&quot;animated-rotate&quot;)) {
+            drawable = new AnimatedRotateDrawable();
+        } else if (name.equals(&quot;animation-list&quot;)) {
+            drawable = new AnimationDrawable();
+        } else if (name.equals(&quot;inset&quot;)) {
+            drawable = new InsetDrawable();
+        } else if (name.equals(&quot;bitmap&quot;)) {
+            //noinspection deprecation
+            drawable = new BitmapDrawable(r);
+            if (r != null) {
+               ((BitmapDrawable) drawable).setTargetDensity(r.getDisplayMetrics());
+            }
+        } else if (name.equals(&quot;nine-patch&quot;)) {
+            drawable = new NinePatchDrawable();
+            if (r != null) {
+                ((NinePatchDrawable) drawable).setTargetDensity(r.getDisplayMetrics());
+             }
+        } else {
+            throw new XmlPullParserException(parser.getPositionDescription() +
+                    &quot;: invalid drawable tag &quot; + name);
+        }
+
+        drawable.inflate(r, parser, attrs, theme);
+        return drawable;
+    }
+</code></pre><p>上面的对应关系就从这里来的，现在是不是一下子明朗了呢。在函数结尾，Drawable通过条用inflate函数解析AttributeSet中的属性信息，并设置Drawable相应的属性。看一下BitmapDrawable吧，</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<pre><code>public void inflate(Resources r, XmlPullParser parser, AttributeSet attrs, Theme theme)
+            throws XmlPullParserException, IOException {
+        super.inflate(r, parser, attrs, theme);
+
+        final TypedArray a = obtainAttributes(r, theme, attrs, R.styleable.BitmapDrawable);
+        updateStateFromTypedArray(a);
+        verifyState(a);
+        a.recycle();
+    }
+</code></pre><p>继续看updateStateFromTypedArray</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<pre><code>private void updateStateFromTypedArray(TypedArray a) throws XmlPullParserException {
+        final Resources r = a.getResources();
+        final BitmapState state = mBitmapState;
+
+        // Account for any configuration changes.
+        state.mChangingConfigurations |= a.getChangingConfigurations();
+
+        // Extract the theme attributes, if any.
+        state.mThemeAttrs = a.extractThemeAttrs();
+
+        final int srcResId = a.getResourceId(R.styleable.BitmapDrawable_src, 0);
+        if (srcResId != 0) {
+            final Bitmap bitmap = BitmapFactory.decodeResource(r, srcResId);
+            if (bitmap == null) {
+                throw new XmlPullParserException(a.getPositionDescription() +
+                        &quot;: &lt;bitmap&gt; requires a valid src attribute&quot;);
+            }
+
+            state.mBitmap = bitmap;
+        }
+
+        state.mTargetDensity = r.getDisplayMetrics().densityDpi;
+
+        final boolean defMipMap = state.mBitmap != null ? state.mBitmap.hasMipMap() : false;
+        setMipMap(a.getBoolean(R.styleable.BitmapDrawable_mipMap, defMipMap));
+
+        state.mAutoMirrored = a.getBoolean(
+                R.styleable.BitmapDrawable_autoMirrored, state.mAutoMirrored);
+        state.mBaseAlpha = a.getFloat(R.styleable.BitmapDrawable_alpha, state.mBaseAlpha);
+
+        final int tintMode = a.getInt(R.styleable.BitmapDrawable_tintMode, -1);
+        if (tintMode != -1) {
+            state.mTintMode = Drawable.parseTintMode(tintMode, Mode.SRC_IN);
+        }
+
+        final ColorStateList tint = a.getColorStateList(R.styleable.BitmapDrawable_tint);
+        if (tint != null) {
+            state.mTint = tint;
+        }
+
+        final Paint paint = mBitmapState.mPaint;
+        paint.setAntiAlias(a.getBoolean(
+                R.styleable.BitmapDrawable_antialias, paint.isAntiAlias()));
+        paint.setFilterBitmap(a.getBoolean(
+                R.styleable.BitmapDrawable_filter, paint.isFilterBitmap()));
+        paint.setDither(a.getBoolean(R.styleable.BitmapDrawable_dither, paint.isDither()));
+
+        setGravity(a.getInt(R.styleable.BitmapDrawable_gravity, state.mGravity));
+
+        final int tileMode = a.getInt(R.styleable.BitmapDrawable_tileMode, TILE_MODE_UNDEFINED);
+        if (tileMode != TILE_MODE_UNDEFINED) {
+            final Shader.TileMode mode = parseTileMode(tileMode);
+            setTileModeXY(mode, mode);
+        }
+
+        final int tileModeX = a.getInt(R.styleable.BitmapDrawable_tileModeX, TILE_MODE_UNDEFINED);
+        if (tileModeX != TILE_MODE_UNDEFINED) {
+            setTileModeX(parseTileMode(tileModeX));
+        }
+
+        final int tileModeY = a.getInt(R.styleable.BitmapDrawable_tileModeY, TILE_MODE_UNDEFINED);
+        if (tileModeY != TILE_MODE_UNDEFINED) {
+            setTileModeY(parseTileMode(tileModeY));
+        }
+
+        // Update local properties.
+        initializeWithState(state, r);
+    }
+</code></pre><p>updateStateFromTypedArray函数中，BitmapDrawable获取到src属性后，通过BitmapFactory加载图像文件，并读取用户配置的属性，设置BitmapDrawable的其他属性。其他的Drawable的实现方式类似。</p>
 
     </div>
 
