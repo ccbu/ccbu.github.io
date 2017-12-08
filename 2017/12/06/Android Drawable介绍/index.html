@@ -221,7 +221,7 @@
 </tbody>
 </table>
 <p>下面我们通过Framework的源代码来探索一下Drawable的加载过程，一般情况下，我们通过getResources().getDrawable(int id);的方式去加载。顺着这条线往下看，getDrawable-&gt;loadDrawable-&gt;loadDrawableForCookie-&gt;Drawable.createFromXml-&gt;createFromXmlInner,来看android\graphics\drawable\Drawable.java的createFromXmlInner函数的实现代码。</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="" data-labels_right="" data-labels_copy=""><span class="code-caption-label"></span></p><p></p>
 <pre><code>public static Drawable createFromXmlInner(Resources r, XmlPullParser parser, AttributeSet attrs,
             Theme theme) throws XmlPullParserException, IOException {
         final Drawable drawable;
@@ -279,7 +279,7 @@
         return drawable;
     }
 </code></pre><p>上面的对应关系就从这里来的，现在是不是一下子明朗了呢。在函数结尾，Drawable通过条用inflate函数解析AttributeSet中的属性信息，并设置Drawable相应的属性。看一下BitmapDrawable吧，</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="" data-labels_right="" data-labels_copy=""><span class="code-caption-label"></span></p><p></p>
 <pre><code>public void inflate(Resources r, XmlPullParser parser, AttributeSet attrs, Theme theme)
             throws XmlPullParserException, IOException {
         super.inflate(r, parser, attrs, theme);
@@ -290,7 +290,7 @@
         a.recycle();
     }
 </code></pre><p>继续看updateStateFromTypedArray</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="" data-labels_right="" data-labels_copy=""><span class="code-caption-label"></span></p><p></p>
 <pre><code>private void updateStateFromTypedArray(TypedArray a) throws XmlPullParserException {
         final Resources r = a.getResources();
         final BitmapState state = mBitmapState;
