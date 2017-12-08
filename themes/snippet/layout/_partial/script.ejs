@@ -1,8 +1,11 @@
 <% if (is_post() && theme.highlightTheme){%>
-  <%- js('assets/highlight.pack.js?rev=@@hash') %>
+  <%- js('//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js') %>
   <script>
-     hljs.initHighlightingOnLoad(); //初始化代码高亮 
+    hljs.initHighlightingOnLoad();//初始化代码高亮 
+  
   </script>
+   
+});
 <%}%>
 
 <%if (theme.jsonContent.searchLocal){%>

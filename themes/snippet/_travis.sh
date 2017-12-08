@@ -24,7 +24,7 @@ function default(){
   git clone https://${GH_REF} .deploy_git
   cd .deploy_git
 
-  git checkout hexo
+  git checkout master
   cd ../
 
   mv .deploy_git/.git/ ./public/
@@ -49,7 +49,7 @@ EOF
   git config user.email "ccbuluo@qq.com"
   git add .
   git commit -m "Build by Travis CI"
-  git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" hexo:hexo
+  git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 } 
 
 case $1 in 

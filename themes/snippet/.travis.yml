@@ -42,5 +42,5 @@ branches:
     - hexo
 env:
  global:
-   - GH_REF: https://github.com/ccbu/ccbu.github.io.git
+   - GH_REF: github.com/ccbu/ccbu.github.io.git
 

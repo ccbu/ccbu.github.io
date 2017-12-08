@@ -1,0 +1,12 @@
+options:
+  spellcheck: false
+  overwriteImages: false
+  askImageFilename: false
+editor:
+  inputStyle: contenteditable
+  spellcheck: false
+admin:
+  name: hexo
+  password: hey
+  secret: hey hexo
+  expire: 60*1

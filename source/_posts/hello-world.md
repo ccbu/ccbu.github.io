@@ -9,8 +9,11 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 
 ### Create a new post
 
-``` bash
-$ hexo new "My New Post"
+``` c
+public void test() {
+	int a = 0; int a = 0;int a = 0;int a = 0;int a = 0;int a = 0;int a = 0;int a = 0;
+	int b = 3;
+}
 ```
 
 More info: [Writing](https://hexo.io/docs/writing.html)
