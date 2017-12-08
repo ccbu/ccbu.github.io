@@ -24,7 +24,7 @@ function default(){
   git clone https://${GH_REF} .deploy_git
   cd .deploy_git
 
-  git checkout hexo
+  git checkout master
   cd ../
 
   mv .deploy_git/.git/ ./public/
