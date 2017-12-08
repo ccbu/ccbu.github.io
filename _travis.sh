@@ -25,10 +25,7 @@ function default(){
   cd .deploy_git
 
   git checkout master
-  cd ../
-
-  mv .deploy_git/.git/ ./public/
-  cd ./public
+  cp -rf ../public/* .
 
 cat <<EOF >> README.md 
 部署状态 | 集成结果 | 参考值
