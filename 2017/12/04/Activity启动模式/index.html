@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://blog.ccbu.cc">
+    <!--SEO-->
+
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+
+<title>Activity启动模式 | ccbu&#39;s blog</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="ccbu&#39;s blog" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css?rev=9.12.0">
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css?rev=3.3.4">
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+
+
+
+
+
+    
+</head>
+
+
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header"  style="background-image:url(/img/top-background.jpg)"  >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="">
+            <img src="/img/avatar.jpg" alt="logo头像">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="ccbu的博客">  
+             
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                    </span>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation"><a href="/"><i class="fa fa-fw "></i>主页</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/categories/android/"><i class="fa fa-fw "></i>安卓开发</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/categories/cpp/"><i class="fa fa-fw "></i>C++开发</a>
+                            </li>
+                        
+                            <li role="presentation"><a href="/about/"><i class="fa fa-fw "></i>关于我</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="Activity启动模式">
+            
+            Activity启动模式
+            
+        </h1>
+        <div class="post-meta">
+    
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        <span>android</span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            null
+            
+        </span>
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">2017/12/04</span>
+    </span>
+</div>
+
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="Activity启动模式"><a href="#Activity启动模式" class="headerlink" title="Activity启动模式"></a>Activity启动模式</h3><p>Android系统是通过Activity栈的方式来管理Activity的，而按照栈的特性，系统每创建一个新的Activity都会把其实例放入栈中，而按back键退出时，则从栈顶移除该Activity。而这种管理方式太过简单粗暴，当重复启动一个Activity时，会创建很多个实例，因此在很多情况下无法满足需求，因此，Android系统使用了Activity启动模式并配合Activity栈来完成对系统中各个Activity的管理。</p>
+<p>Activity启动模式有以下四种：</p>
+<ul>
+<li>standard</li>
+<li>singleTop</li>
+<li>singleTask</li>
+<li>singleInstance</li>
+</ul>
+<p>在开发过程中，我们根据应用场景及需要的不同选择合适的启动模式。设置Activity的启动模式，只需要在AndroidManifest.xml里对应的<activity>标签设置android:launchMode属性。</activity></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity   </span><br><span class="line">    android:launchMode=&quot;standard&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>standard</strong> 模式<br>默认模式，可以不用写配置。在这种模式下，每启动一个Activity都会创建一个新的实例，也不会理会该实例是否已经存在。一般情况下，谁启动了改模式的Activity，该Activity就会放入启动它的Activity所在的任务栈中。同时被启动的Activity的onCreate()，onStart()，onResume()方法都会被调用。也就是说这种模式下，同一个任务栈中允许有多个该Activity的实例，该Activity的多实例也可以同时存在于不同的任务栈中。</p>
+<p><strong>singleTop</strong> 模式<br>可以有多个实例，但是不允许多个相同Activity叠加。即，如果已经有一个Activity在当前任务栈的栈顶了，再去启动一个相同的Activity，那么则不会创建新的实例，而是直接调用其onNewIntent方法。该模式与standard模式不同之处在于如果当前任务栈顶已经有了该Activity的实例，那么就不会再去创建新的实例，其他特性则与standard模式完全相同。</p>
+<p><strong>singleTask</strong> 模式<br>只有一个实例。在同一个应用程序中启动的时候，若Activity不存在，则会在当前任务栈中创建一个新的实例，若存在，则会把任务栈中其他在其之上的其它Activity全部destory掉并调用其onNewIntent方法。如果是在别的应用程序中启动它，则会新建一个任务栈，并在该任务栈中启动这个Activity，singleTask允许别的Activity与其在一个任务栈中共存，也就是说，如果我在这个singleTask的实例中再打开新的Activity，这个新的Activity还是会在singleTask的实例的任务栈中。</p>
+<p><strong>singleInstance</strong> 模式<br>只有一个实例，并且这个实例独立运行在一个task中，这个task只有这个实例，不允许有别的Activity存在。以singleInstance模式启动的Activity在整个系统中是单例的，如果在启动这样的Activiyt时，已经存在了一个实例，那么会把它所在的任务调度到前台，重用这个实例。</p>
+<p><strong>note:</strong> 在详细分析了四种启动模式后，我们需要知道的是，加入启动模式后，启动一个Activity可能有两种方式，一种是创建一个新的Activity实例并启动，此时Activity的onCreate()，onStart()，onResume()方法都会被调用;而当Activity是复用已经存在的实例时，则会将其置于栈顶的同时去调用其onNewIntent方法。此时Activity的onCreate()，onStart()方法是不会被调用的，但onResume()会被调用。</p>
+<h3 id="使用Intent的flag设置启动模式"><a href="#使用Intent的flag设置启动模式" class="headerlink" title="使用Intent的flag设置启动模式"></a>使用Intent的flag设置启动模式</h3><p>当你启动一个Activity时，你也可以动态的设置intent的flag，然后通过startActivity()方法启动activity，从而修改其启动的activity与它的task的关联模式。具体可以使用的flag有：</p>
+<ul>
+<li><p><strong>FLAG_ACTIVITY_NEW_TASK</strong>:对应之前的“singleTask”，在新的task中启动activity，如果一个你需要的activity的task已经存在，则将它推向前台，恢复其上一个状态，它通过onNewIntent()收到这个新的intent。</p>
+</li>
+<li><p><strong>FLAG_ACTIVITY_SINGLE_TOP</strong>:对应之前的“singleTop”,如果被启动的activity是当前顶部的activity，则已经存在的实例会收到onIntent(),而不会重新去创建这个实例。</p>
+</li>
+<li><p><strong>FLAG_ACTIVITY_CLEAR_TOP</strong>:这个行为在launchMode属性中没对应的属性值，若被启动的activity已经在当前task中运行，则不会创建它的新实例，而是的<strong>销毁在它之上</strong>的其他所有的activities，然后通过 onNewIntent()传递一个新的intent给这个恢复了的activity，它一般会与FLAG_ACTIVITY_NEW_TASK一起使用。值得注意的是，<strong>如果activity的启动模式是”standard”，它自己也将被移除，然后一个新的实例将被启动。这是因为当启动模式是”standard”时，为了接收新的intent必须创建新的实例</strong>。</p>
+</li>
+</ul>
+<h3 id="任务共用性的处理-Handling-affinities"><a href="#任务共用性的处理-Handling-affinities" class="headerlink" title="任务共用性的处理(Handling affinities)"></a>任务共用性的处理(Handling affinities)</h3><p>一般来说，singleTask就是开启一个新的Task，但是在实际使用过程中，我们有时会发现，有时候并不是这样的，这是因为我们定义了affinities,也就是任务公用性。</p>
+<p>affinity定义了一个Activity将被分配到哪一个Task中。默认情况下，同一个app中得所有activity有一个同样的affinity，因此，默认情况下同一个应用程序中得所有activity都在同一个task中。一个Task的affinity由这个Task的根Actiivty决定。然而，我们可以修改Activity默认的affinity，这样，不同应用程序的Activity可以共用同样的affinity，或者同一个程序的不同Activity分配不同的affinity。一个应用程序默认的affinity就是应用程序的包名，所以，如果我们想定义一个不同的affinity，必须和默认的affinity不同。我们可以通过<application>中得android:taskAffinity修改整个程序的affinity，也可以通过<activity>的android:taskAffinity对单个Activity的affinity修改。</activity></application></p>
+<p>而affinity的使用通常有以下两种情况，</p>
+<ol>
+<li>当android:launchMode是singleTask或者Intent中包含FLAG_ACTIVITY_NEW_TASK:</li>
+</ol>
+<p>默认情况下，我们调用startActivity()，会实例化一个Activity，放入到与调用者相同的task。但是如果这个Activity的的启动模式是singleTask，或者启动它的Intent包含了</p>
+<p>FLAG_ACTIVITY_NEW_TASK时，系统会进行如下的步骤：</p>
+<ul>
+<li><p>判断这个Activity有没有实例已经存在了，有的话，直接传递Intent到它的onNewIntent()方法中。</p>
+</li>
+<li><p>如果不存在，系统查找是否有与这个Activity相同affinity的Task已经存在，如果存在，那么就将这个Activity启动到这个Task中。</p>
+</li>
+<li><p>如果不存在这样的Task，那么系统就会创建一个新的Task，并且将这个Activity启动这个Task中，作为根Activity。</p>
+</li>
+</ul>
+<p><strong>因此，从现在看来，只是单纯的用singleTask指定Activity，是不能开辟一个新的Task的，因为我们并没有给他指定affinity。而官方文档对于singleTask的描述，都是基于我们使用了不同的affinity的前提下，只不过是省略了这个描述。所以，我们要明白，singleTask的正确用法，应该是结合affinity使用的。</strong></p>
+<ol>
+<li>当一个Activity设置allowTaskReparenting属性为true:</li>
+</ol>
+<p>这个属性定义了一个Activity，表示是否可以从一个启动它的task，切换到与它相同affinity的task中里去（当这个task切换到前台的时候）。true表示可以移动，false表示它必须呆在启动他得task里。</p>
+<p>通常情况下，当一个Activity启动了，那么它就会存在于启动它的task中，并且在整个生命周期中都留在这个task中。但是，我们可以通过这个属性，做出如下改变，当这个Activity当前的Task处于后台，这个时候如果有一个该Activity具有相同affinity的Task被启动到前台，那么这个Activity就可以从它之前的Task，移动到这个新的Task显示。</p>
+<p>通常，它的作用是将app中得Activity与app的main task结合起来，举个例子，如下：</p>
+<p>有一个e-mail程序，他需要调用浏览器程序的某个Activity（假设为Activity A）来显示一些数据，这个Activity A的该属性设置为true。现在，e-mail程序调用了这个Activity A，在用户看来，好像这个Activity A就是e-mial程序的一部分，因为这个Activity A和这个e-mail程序在同一个task中。现在将e-mail退出到后台，启动浏览器程序，因为Activity  A和浏览器程序有相同的affinity，所以Activity A从e-mail程序的Task移动到浏览器程序的Task，并显示在前台。当我们下次再启动e-mail程序时，Activity A就不会存在，因为他已经移动到浏览器程序的Task里去了。</p>
+<h3 id="清理Back-Stack"><a href="#清理Back-Stack" class="headerlink" title="清理Back Stack"></a>清理Back Stack</h3><p>如果用户离开一个task很久，系统就会清理这个task中除了根activity之外的所有activities。当用户返回到这个task，只有根activity会被恢复。但是我们可以设置一些activity的属性，用来改变这一行为：</p>
+<ul>
+<li>alwaysRetainTaskState</li>
+</ul>
+<p>如果这个属性在task的根activity中被设置为true，那么上面描述的默认行为不会发生，即便过了很长时间，task仍将会保持所有的activities。</p>
+<ul>
+<li>clearTaskOnLaunch</li>
+</ul>
+<p>如果这个属性在task的根activity中被设置为true，每次用户离开这个task，整个task都会被清到只剩根activity，这样用户只会永远返回到它最初的状态，即便离开的时间很短。</p>
+<ul>
+<li>finishOnTaskLaunch</li>
+</ul>
+<p>这个属性和上一个很像，不同的是，它只作用于单个activity，而不是整个task。它可以引起任何activity离开，包括根activity。当它被设置为true时，这个activity只在当前会话中属于这个task，如果用户离开后再返回，它也不会再出现。</p>
+<h3 id="开启一个Task"><a href="#开启一个Task" class="headerlink" title="开启一个Task"></a>开启一个Task</h3><p>我们可以通过一个Activity指定一个intent过滤器，如下面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity ...&gt;</span><br><span class="line">    &lt;intent-filter ... &gt;</span><br><span class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">        &lt;category android:name=&quot;android.inp tent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">    &lt;/intent-filter&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/activity&gt;</span><br></pre></td></tr></table></figure>
+<p>这时这个activity就作为根activity存在于一个task中，这个activity也是进入这个task的入口点，同时，它的图标和标签也会被显示在应用启动界面上，这时用户就可以启动这个activity并且再次回到这个任务。因此，从这里我们可以看到，要使用“singleTask”与“singleInstance”，就必须这个activity应当也有ACTION_MAIN与CATEGORY_LAUNCHER过滤器。因为假如没有设置这两个过滤器的话，当一个intent启动一个”singleTask”的activity,在新的Task中进行初使化，运行一段时间后，用户突然按上了home键回到桌面，此时这个Task就被移到后台并且不可见，因为这个activity没有设置过滤器，所以不是应用启动的activity，那么用户也就无法返回到这个Task中了。</p>
+
+    </div>
+
+    <div class="post-footer">   
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="#" target="_blank">CCBU</a>
+            
+        </div>
+        <div>
+            
+        </div>  
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2017/12/06/Java垃圾回收/" class="pre-post btn btn-default"><i class="fa fa-angle-left fa-fw"></i>上一篇</a>
+    
+    
+        <a href="/2017/12/04/Android知识体系/" class="next-post btn btn-default">下一篇<i class="fa fa-angle-right fa-fw"></i></a>
+    
+</div>
+
+
+    <div id="comments">
+        
+   <p>评论系统未开启，无法评论！</p>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+    <aside class="col-md-4 sidebar">
+        
+        
+    <div class="widget">    
+        <h3 class="title">搜索</h3>
+        <div id="search-form">
+            <div id="result-mask" class="hide"></div>
+            <div class="search-area">
+                
+                    <input id="search-key" type="search" autocomplete="off" placeholder="搜点什么呢?">
+                    <button type="button" class="search-form-submit" id="search-local">站内搜索</button>
+                
+                
+            </div>
+            <div id="result-wrap" class="hide">
+                <div id="search-result"></div>
+            </div>
+            <div class="hide">
+                <template id="search-tpl">
+                    <div class="item">
+                        <a href="/{path}" title="{title}">
+                            <div class="title">{title}</div>
+                            <div class="content">{content}</div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget notification">
+        <h3 class="title">网站公告</h3>
+        <div>
+            <p>CCBU的博客开通了，欢迎大家关注和添加收藏 <br/>
+<hr/>博客和<a href="http://github.com/ccbu">Github</a>会不定期进行更新，欢迎收藏和start
+</p>
+        </div>
+    </div>
+
+        
+        
+    <div class="widget">
+      <h3 class="title">社交</h3> 
+        <div class="content social">
+            
+	            <a href="//github.com/ccbu" rel="external nofollow" title="Github" target="_blank">
+			    	<i class="git fa fa-git"></i>
+			    </a>
+            
+	            <a href="mailto:ccbuluo@qq.com" rel="external nofollow" title="邮箱" target="_blank">
+			    	<i class="envelope-o fa fa-envelope-o"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
+			    	<i class="qq fa fa-qq"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="微博" target="_blank">
+			    	<i class="weibo fa fa-weibo"></i>
+			    </a>
+            
+	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
+			    	<i class="users fa fa-users"></i>
+			    </a>
+            
+	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
+			    	<i class="feed fa fa-feed"></i>
+			    </a>
+            
+        </div>
+    </div>
+
+
+        
+        
+    <div class="widget">
+        <h3 class="title">分类</h3>
+        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/android/"><i class="fa" aria-hidden="true">android</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp/"><i class="fa" aria-hidden="true">cpp</i></a><span class="category-list-count">1</span></li></ul>
+    </div>
+
+
+        
+        
+    <div class="widget">
+      <h3 class="title">归档</h3>
+        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/"><i class="fa" aria-hidden="true">十二月 2017</i></a><span class="archive-list-count">6</span></li></ul>
+    </div>
+
+
+        
+        
+
+        
+        
+    <div class="widget">
+        <h3 class="title">友链</h3>
+        <div class="content friends-link">
+        
+            <a href="http://www.github.com" class="fa" target="_blank">Github</a>
+        
+        </div>
+    </div>
+
+
+        
+    </aside>
+
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12"> 
+                <span>Copyright &copy; 2017
+                </span> | 
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> | 
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+	<script src="/js/search.js?rev=@@hash"></script>
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+
+</body>
+</html>
