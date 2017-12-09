@@ -174,7 +174,48 @@
 <li><p>The AlarmManager can trigger one-time or recurring events which occur even when the device is in deep sleep or your application is not running. Events may be scheduled with your choice of currentTimeMillis() (RTC) or elapsedRealtime() (ELAPSED_REALTIME), and cause an Intent broadcast when they occur.<br>AlarmManager可以触发一次或重复事件，即使设备深度休眠或者应用程序没有运行。事件可以选择用 currentTimeMillis或者elapsedRealtime()(ELAPSED_REALTIME)来设置时间，当事件发生会触发一个广播。</p>
 </li>
 </ul>
-<p><strong>常用函数</strong><br>| return |methods |  |<br>| —- | —- | —- |<br>|static long|currentThreadTimeMillis()|Returns milliseconds running in the current thread.|<br>|static long|elapsedRealtime()|Returns milliseconds since boot, including time spent in sleep.|<br>|static long|elapsedRealtimeNanos()|Returns nanoseconds since boot, including time spent in sleep.|<br>|static boolean|setCurrentTimeMillis(long millis)|Sets the current wall time, in milliseconds.|<br>|static void|sleep(long ms)|Waits a given number of milliseconds (of uptimeMillis) before returning.|<br>|static long|uptimeMillis()|Returns milliseconds since boot, not counting time spent in deep sleep.|</p>
+<p><strong>常用函数</strong></p>
+<table>
+<thead>
+<tr>
+<th>return</th>
+<th>methods</th>
+<th>info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static long</td>
+<td>currentThreadTimeMillis()</td>
+<td>Returns milliseconds running in the current thread.</td>
+</tr>
+<tr>
+<td>static long</td>
+<td>elapsedRealtime()</td>
+<td>Returns milliseconds since boot, including time spent in sleep.</td>
+</tr>
+<tr>
+<td>static long</td>
+<td>elapsedRealtimeNanos()</td>
+<td>Returns nanoseconds since boot, including time spent in sleep.</td>
+</tr>
+<tr>
+<td>static boolean</td>
+<td>setCurrentTimeMillis(long millis)</td>
+<td>Sets the current wall time, in milliseconds.</td>
+</tr>
+<tr>
+<td>static void</td>
+<td>sleep(long ms)</td>
+<td>Waits a given number of milliseconds (of uptimeMillis) before returning.</td>
+</tr>
+<tr>
+<td>static long</td>
+<td>uptimeMillis()</td>
+<td>Returns milliseconds since boot, not counting time spent in deep sleep.</td>
+</tr>
+</tbody>
+</table>
 <p><strong>注释：</strong></p>
 <p>1、public static long currentThreadTimeMillis () 返在当前线程运行的毫秒数。</p>
 <p>2、public static long elapsedRealtime () 返回系统启动到现在的毫秒数，包含休眠时间。</p>
