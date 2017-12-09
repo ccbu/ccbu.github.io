@@ -12,20 +12,20 @@ Drawable中xml标签与Drawable对象的对应关系如以下表格所示:
 
 | xml标签 | Drawable对象 |
 | ---- | ---- |
-| <selector> | StateListDrawable |
-| <level-list> | LevelListDrawable |
-| <layer-list> | LayerDrawable |
-| <transition> | TransitionDrawable |
-| <color> | ColorDrawable |
-| <shape> | GradientDrawable |
-| <scale> | ScaleDrawable |
-| <vector> | VectorDrawable |
-| <clip> | ClipDrawable |
-| <rotate> | RotateDrawable |
-| <anination-list> | AnimationDrawable |
-| <inset> | InsetDrawable |
-| <bitmap> | BitmapDrawable |
-| <nine-patch> | NinePatchDrawable |
+| &lt;selector&gt; | StateListDrawable |
+| &lt;level-list&gt; | LevelListDrawable |
+| &lt;layer-list&gt; | LayerDrawable |
+| &lt;transition&gt; | TransitionDrawable |
+| &lt;color&gt; | ColorDrawable |
+| &lt;shape&gt; | GradientDrawable |
+| &lt;scale&gt; | ScaleDrawable |
+| &lt;vector&gt; | VectorDrawable |
+| &lt;clip&gt; | ClipDrawable |
+| &lt;rotate&gt; | RotateDrawable |
+| &lt;anination-list&gt; | AnimationDrawable |
+| &lt;inset&gt; | InsetDrawable |
+| &lt;bitmap&gt; | BitmapDrawable |
+| &lt;nine-patch&gt; | NinePatchDrawable |
 
 下面我们通过Framework的源代码来探索一下Drawable的加载过程，一般情况下，我们通过getResources().getDrawable(int id);的方式去加载。顺着这条线往下看，getDrawable->loadDrawable->loadDrawableForCookie->Drawable.createFromXml->createFromXmlInner,来看android\graphics\drawable\Drawable.java的createFromXmlInner函数的实现代码。
 ```

@@ -38,7 +38,8 @@ Handler可以在一个相对或者绝对的时间设置异步回调，Handler类
 AlarmManager可以触发一次或重复事件，即使设备深度休眠或者应用程序没有运行。事件可以选择用 currentTimeMillis或者elapsedRealtime()(ELAPSED_REALTIME)来设置时间，当事件发生会触发一个广播。
 
 **常用函数**
-| return |methods |  |
+
+| return | methods | info |
 | ---- | ---- | ---- |
 |static long|currentThreadTimeMillis()|Returns milliseconds running in the current thread.|
 |static long|elapsedRealtime()|Returns milliseconds since boot, including time spent in sleep.|
